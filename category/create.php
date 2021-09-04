@@ -42,7 +42,7 @@ $category->name = $data->name;
 $category->detail = $data->detail;
 
 http_response_code(200);
-if (isset($category->is_expense) && isset($category->name) && isset($category->detail)) {
+if (isset($category->is_expense) && isset($category->name) && isset($category->detail) && $category->create()) {
     die(json_encode(array("status" => true, "message" => "Yeah.. Category was created.")));
 } else {
     die(json_encode(array("status" => false, "message" => "Opps.. Unable to create Category.")));
