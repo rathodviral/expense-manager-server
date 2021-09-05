@@ -13,13 +13,19 @@ class Common
 
     if ($data === 'expense') {
       die(json_encode(
-        array("status" => false, "message" => "Opps.. Expense/Income data found.")
+        array("status" => false, "message" => "Opps.. Expense/Income data not found.")
       ));
     }
 
     if ($data === 'category') {
       die(json_encode(
-        array("status" => false, "message" => "Opps.. Category data found.")
+        array("status" => false, "message" => "Opps.. Category data not found.")
+      ));
+    }
+	
+	if ($data === 'bydate') {
+      die(json_encode(
+        array("status" => false, "message" => "Opps.. Start Date/End Date perameter not found.")
       ));
     }
   }
