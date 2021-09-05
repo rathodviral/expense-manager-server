@@ -16,6 +16,7 @@ $common = new Common();
 $tablename = 'exp_data';
 $start = '';
 $end = '';
+$is_expense = '';
 
 if (!isset($_GET['family'])) {
   $common->errorHandling('family');
@@ -25,17 +26,24 @@ if (!isset($_GET['family'])) {
 }
 
 if (!isset($_GET['start'])) {
-  $common->errorHandling('start');
+  $common->errorHandling('bydate');
   return;
 } else {
   $start = $_GET['start'];
 }
 
 if (!isset($_GET['end'])) {
-  $common->errorHandling('end');
+  $common->errorHandling('bydate');
   return;
 } else {
   $end = $_GET['end'];
+}
+
+if (!isset($_GET['isExpense'])) {
+  $common->errorHandling('bydate');
+  return;
+} else {
+  $is_expense = $_GET['isExpense'];
 }
 
 $dbclass = new DBClass();
@@ -43,7 +51,7 @@ $connection = $dbclass->getConnection();
 
 $exp_data = new ExpenseData($connection, $tablename);
 
-$stmt = $exp_data->readByDate($start, $end);
+$stmt = $exp_data->readByDate($start, $end, $is_expense);
 $count = $stmt->rowCount();
 
 if ($count > 0) {

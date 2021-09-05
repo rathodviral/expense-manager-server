@@ -94,9 +94,9 @@ class ExpenseData
         return $stmt;
     }
 
-    public function readByDate($start_date, $end_date)
+    public function readByDate($start_date, $end_date, $is_expense)
     {
-        $query = "SELECT * FROM " . $this->table_name . " WHERE (date BETWEEN '" . $start_date . "' AND '" . $end_date . "')";
+        $query = "SELECT * FROM " . $this->table_name . " WHERE (date BETWEEN '" . $start_date . "' AND '" . $end_date . "') AND is_expense = '" . $is_expense . "'";
         $stmt = $this->connection->prepare($query);
         $stmt->execute();
         return $stmt;
