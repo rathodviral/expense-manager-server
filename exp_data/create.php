@@ -42,7 +42,7 @@ $exp_data->is_paid = $data->isPaid ? '1' : '0';
 $exp_data->date = $data->date;
 $exp_data->user = $data->user;
 $exp_data->category = $data->category;
-$exp_data->detail = $data->detail;
+$exp_data->detail = isset($data->detail) ? $data->detail : "";
 $exp_data->amount = $data->amount;
 $exp_data->note = $data->note;
 
