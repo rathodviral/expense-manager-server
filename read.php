@@ -7,8 +7,9 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 
 include_once 'dbclass.php';
 include_once 'category/category.php';
+include_once 'category_only/category.php';
 include_once 'exp_data/exp_data.php';
-// include_once 'sub_category/sub_category.php';
+include_once 'sub_category/sub_category.php';
 
 $family = '';
 $type = '';
@@ -31,22 +32,31 @@ $connection = $dbclass->getConnection();
 $category = new Category($connection,  $family);
 $category_data = $category->readData();
 
-// $sub_category = new SubCategory($connection,  $family);
-// $sub_category_data = $sub_category->readData();
+$category_only = new CategoryOnly($connection,  $family);
+$category_only_data = $category_only->readData();
+
+$sub_category = new SubCategory($connection,  $family);
+$sub_category_data = $sub_category->readData();
 
 $exp = new ExpenseData($connection,  $family);
 $exp_data = $exp->readData();
 
 $response = array();
 $response["data"] = array();
-if ($type === 'category') {
+if ($type === 'category_only') {
+  $response["data"]["category"] = $category_only_data;
+}else if ($type === 'category') {
   $response["data"]["category"] = $category_data;
-  // $response["data"]["subCategory"] = $sub_category_data;
+  $response["data"]["subCategory"] = $sub_category_data;
 } else if ($type === 'expense') {
+  $response["data"]["expense"] = $exp_data;
+}else if ($type === 'category_only_all') {
+  $response["data"]["category"] = $category_only_data;
+  //$response["data"]["subCategory"] = $sub_category_data;
   $response["data"]["expense"] = $exp_data;
 } else {
   $response["data"]["category"] = $category_data;
-  // $response["data"]["subCategory"] = $sub_category_data;
+  $response["data"]["subCategory"] = $sub_category_data;
   $response["data"]["expense"] = $exp_data;
 }
 if (!empty($category_data) || !empty($sub_category_data) || !empty($exp_data)) {
